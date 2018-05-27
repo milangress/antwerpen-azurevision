@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "cognitive-services": "^1.1.0",
+    "dotenv": "^5.0.1",
     "fs": "0.0.1-security",
     "fs.promised": "^3.0.0",
     "promise-retry": "^1.1.1",

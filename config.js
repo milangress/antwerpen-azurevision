@@ -1,7 +1,7 @@
 module.exports = {
     computerVision: {
         endpoint: "northeurope.api.cognitive.microsoft.com",
-        apiKey: "8d3dd9a959f346d9ab081316d2d71cb6",
+        apiKey: "insert-key-here",
     },
     face: {
         endpoint: "westus.api.cognitive.microsoft.com",

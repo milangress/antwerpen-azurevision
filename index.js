@@ -1,12 +1,13 @@
 const cognitiveServices = require('cognitive-services');
-
+require('dotenv').config();
 const fs = require('fs');
 
 
 
+
 const client = new cognitiveServices.computerVision({
-    endpoint: "northeurope.api.cognitive.microsoft.com",
-    apiKey: "8d3dd9a959f346d9ab081316d2d71cb6",
+    endpoint: process.env.ENDPOINT,
+    apiKey: process.env.API_KEY
 });
 const parameters = {
     "visualFeatures": "Description",
