@@ -33,14 +33,30 @@ let fixedNumberLenght = 7
     sendImage(image, imageNumber)
 }*/
 
-startNewUpload(0)
+let startNumber = 0
+let endNumber = 2
+
+startNewUpload(startNumber)
 
 function startNewUpload(currentCounter) {
-    let imageNumber = fillNumberTo(currentCounter + 1, fixedNumberLenght)
-    let filePath = createFilePath(imageNumber)
-    console.log(`New Image Path: ${filePath}`)
-    let image = fs.readFileSync(filePath)
-    sendImage(image, imageNumber)
+    consoleDivider();
+    let nextCounter = currentCounter + 1
+    let imageNumber = fillNumberTo(nextCounter, fixedNumberLenght)
+
+    if (nextCounter <= endNumber) {
+        let filePath = createFilePath(imageNumber)
+        console.log(`New Image Path: ${filePath}`)
+        let image = fs.readFileSync(filePath)
+        sendImage(image, imageNumber, nextCounter)
+    } else {
+        console.log('End of Counter: ' + nextCounter)
+        consoleDivider();
+    }
+}
+
+function consoleDivider() {
+    console.log('')
+    console.log('------------')
 }
 
 
@@ -58,18 +74,17 @@ function createFilePath(fileNumber) {
 
 
 
-function sendImage(imagePath, imageNumber) {
+function sendImage(imagePath, imageNumber, currentCounter) {
     client.analyzeImage({
         parameters,
         headers,
         body
     }).then(response => {
         // console.log(response);
-        console.log(response.description.captions);
+        console.log(`response Caption from ${imageNumber}: ${response.description.captions[0].text}`);
         fs.appendFileSync('data.json', JSON.stringify(response));
-        console.log(imageNumber)
+        startNewUpload(currentCounter)
     }).catch((err) => {
         console.log(err);
     })
 }
-
