@@ -16,13 +16,10 @@ const headers = {
     'Content-type': 'application/octet-stream'
 };
 
-const TEST_IMAGE_URL = fs.readFileSync('bilder/0000001.jpg')
+// const TEST_IMAGE_URL = fs.readFileSync('bilder/0000001.jpg')
 
 
 // const body = {"url":FRIENDS_IMAGE_URL}
-const body = TEST_IMAGE_URL
-
-let fixedNumberLenght = 7
 
 
 /*for (let num = 1; num <= 1; num++) {
@@ -33,8 +30,10 @@ let fixedNumberLenght = 7
     sendImage(image, imageNumber)
 }*/
 
-let startNumber = 0
-let endNumber = 2
+let fixedNumberLenght = 7
+
+let startNumber = 40
+let endNumber = 50
 
 startNewUpload(startNumber)
 
@@ -46,8 +45,9 @@ function startNewUpload(currentCounter) {
     if (nextCounter <= endNumber) {
         let filePath = createFilePath(imageNumber)
         console.log(`New Image Path: ${filePath}`)
-        let image = fs.readFileSync(filePath)
-        sendImage(image, imageNumber, nextCounter)
+        let imageData = fs.readFileSync(filePath)
+        sendImage(imageData, imageNumber, nextCounter)
+        console.log(imageData)
     } else {
         console.log('End of Counter: ' + nextCounter)
         consoleDivider();
@@ -66,22 +66,22 @@ function fillNumberTo(counter, lenght) {
 
 
 function createFilePath(fileNumber) {
-    let filePath = `bilder/${fileNumber}.jpg`
-    return filePath
+    return filePath = `bilder/${fileNumber}.jpg`
 }
 
 
 
 
 
-function sendImage(imagePath, imageNumber, currentCounter) {
+function sendImage(body, imageNumber, currentCounter) {
     client.analyzeImage({
         parameters,
         headers,
         body
     }).then(response => {
         // console.log(response);
-        console.log(`response Caption from ${imageNumber}: ${response.description.captions[0].text}`);
+        console.log(`response Caption from ${imageNumber}:`);
+        console.log(response.description.captions)
         fs.appendFileSync('data.json', JSON.stringify(response));
         startNewUpload(currentCounter)
     }).catch((err) => {
