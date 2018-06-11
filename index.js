@@ -32,8 +32,8 @@ const headers = {
 
 let fixedNumberLenght = 7
 
-let startNumber = 40
-let endNumber = 50
+let startNumber = 239
+let endNumber = 500
 
 startNewUpload(startNumber)
 
@@ -81,10 +81,30 @@ function sendImage(body, imageNumber, currentCounter) {
     }).then(response => {
         // console.log(response);
         console.log(`response Caption from ${imageNumber}:`);
-        console.log(response.description.captions)
-        fs.appendFileSync('data.json', JSON.stringify(response));
+        if (response.description.captions) {
+            console.log(response.description.captions)
+        }
+        writeData(response, imageNumber)
         startNewUpload(currentCounter)
     }).catch((err) => {
         console.log(err);
+    })
+}
+
+
+function writeData(responseData, imageNumber){
+    // fs.appendFileSync('data.json', JSON.stringify(responseData))
+    fs.readFile('data.json',function(err,content){
+        if(err) throw err;
+        let parseJson = JSON.parse(content)
+
+        // console.log(parseJson)
+        parseJson.images.push({
+            imageNumber: imageNumber,
+            data: responseData
+        })
+        fs.writeFile('data.json',JSON.stringify(parseJson),function(err){
+            if(err) throw err;
+        })
     })
 }
