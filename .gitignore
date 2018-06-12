@@ -57,7 +57,8 @@ typings/
 # dotenv environment variables file
 .env
 
-idea/
+.idea/
 .DS_Store
-bilder/
+bilder/*
+data/*
 

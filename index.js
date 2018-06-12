@@ -94,7 +94,7 @@ function sendImage(body, imageNumber, currentCounter) {
 
 function writeData(responseData, imageNumber){
     // fs.appendFileSync('data.json', JSON.stringify(responseData))
-    fs.readFile('data.json',function(err,content){
+    fs.readFile('data/data.json',function(err,content){
         if(err) throw err;
         let parseJson = JSON.parse(content)
 
@@ -103,7 +103,7 @@ function writeData(responseData, imageNumber){
             imageNumber: imageNumber,
             data: responseData
         })
-        fs.writeFile('data.json',JSON.stringify(parseJson),function(err){
+        fs.writeFile('data/data.json',JSON.stringify(parseJson),function(err){
             if(err) throw err;
         })
     })
