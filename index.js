@@ -10,7 +10,7 @@ const client = new cognitiveServices.computerVision({
     apiKey: process.env.API_KEY
 });
 const parameters = {
-    "visualFeatures": "Description",
+    "visualFeatures": 'Categories,Color,Description'
 }
 const headers = {
     'Content-type': 'application/octet-stream'
@@ -32,8 +32,15 @@ const headers = {
 
 let fixedNumberLenght = 7
 
-let startNumber = 239
-let endNumber = 500
+let startNumber = 3000
+let endNumber = 4000
+
+if (process.argv.slice(2)){
+    startNumber = process.argv.slice(2, 3) - 1
+    endNumber = process.argv.slice(3, 4)
+    consoleDivider()
+    console.log('start from: ' + startNumber + ' to: ' + endNumber)
+}
 
 startNewUpload(startNumber)
 
